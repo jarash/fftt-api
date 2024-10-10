@@ -1,33 +1,20 @@
 {
-    "name": "alamirault/fftt-api",
-    "description": "SDK afin de consommer l'api FFTT",
+    "name": "jarash/fftt-api",
+    "description": "FFTT API USFAV",
     "keywords": [
-        "fftt",
-        "sdk"
+        "fftt"
     ],
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "Antoine Lamirault",
-            "email": "lamiraultantoine@gmail.com"
+            "name": "Me"
         }
     ],
-    "autoload": {
-        "psr-4": {
-            "Alamirault\\FFTTApi\\": "src"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Alamirault\\FFTTApi\\Tests\\": "tests"
-        }
-    },
     "require": {
         "php": "^7.1|^8.0",
         "ext-simplexml": "*",
         "ext-json": "*",
-
         "guzzlehttp/guzzle": "^6.3",
         "reisraff/accentuation": "^2.0"
     }
