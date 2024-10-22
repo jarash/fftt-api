@@ -8,11 +8,16 @@
     "license": "MIT",
     "authors": [
         {
-            "name": "Me"
+            "name": "jarash"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Jarash\\FfttApi\\": "src/"
+        }
+    },
     "require": {
-        "php": "^7.1|^8.0",
+        "php": "^7.4|^8.0",
         "ext-simplexml": "*",
         "ext-json": "*",
         "guzzlehttp/guzzle": "^6.3",
