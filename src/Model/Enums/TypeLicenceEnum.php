@@ -8,4 +8,5 @@ enum TypeLicenceEnum: string
     case Loisir = 'P';
     case Decouverte = 'I';
     case Evenementiel = 'E';
+    case Arbitre = 'A';
 }
