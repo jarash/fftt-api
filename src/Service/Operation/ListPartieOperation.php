@@ -44,6 +44,10 @@ final class ListPartieOperation
                 'licence' => $licenceId,
             ])['partie'] ?? [];
         $parties = $this->arrayWrapper->wrapArrayIfUnique($parties);
+        
+        if (empty($parties) || empty($parties[0])) {
+            return [];
+        }
 
         $res = [];
 
