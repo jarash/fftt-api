@@ -13,8 +13,11 @@
     ],
     "autoload": {
         "psr-4": {
-            "Jarash\\FfttApi\\": "src/"
+            "Alamirault\\FFTTApi\\": "src"
         }
+    },
+    "replace": {
+        "alamirault/fftt-api": "*"
     },
     "require": {
         "php": "^7.4|^8.0",
