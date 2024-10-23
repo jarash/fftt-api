@@ -58,6 +58,10 @@ final class RetrieveVirtualPointsOperation
             });
 
             foreach ($unvalidatedParties as $unvalidatedParty) {
+                if (!$unvalidatedParty->getAdversaireNom()) {
+                    continue;
+                }
+
                 if (!$latestMonth) {
                     $latestMonth = $unvalidatedParty->getDate()->format('m');
                 } else {
