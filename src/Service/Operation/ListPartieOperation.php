@@ -44,8 +44,8 @@ final class ListPartieOperation
                 'licence' => $licenceId,
             ])['partie'] ?? [];
         $parties = $this->arrayWrapper->wrapArrayIfUnique($parties);
-        
-        if (empty($parties) || empty($parties[0])) {
+
+        if (empty($parties)) {
             return [];
         }
 
@@ -53,6 +53,9 @@ final class ListPartieOperation
 
         /** @var array{advnompre: string, date: string, vd: string, numjourn: string, pointres: string, coefchamp: string, advlic: string, advsexe: string, advclaof: string} $partie */
         foreach ($parties as $partie) {
+            if (empty($partie)) {
+                continue;
+            }
             [$nom, $prenom] = $this->nomPrenomExtractor->extractNomPrenom($partie['advnompre']);
             /** @var \DateTime $date */
             $date = \DateTime::createFromFormat('d/m/Y', $partie['date']);
