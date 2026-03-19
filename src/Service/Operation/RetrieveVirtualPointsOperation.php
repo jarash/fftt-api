@@ -54,7 +54,7 @@ final class RetrieveVirtualPointsOperation
             $unvalidatedParties = $this->listPartieOperation->listUnvalidatedPartiesJoueurByLicence($licenceId);
 
             usort($unvalidatedParties, function (UnvalidatedPartie $a, UnvalidatedPartie $b) {
-                return ($a->getDate() >= $b->getDate()) ? 1 : 0;
+                return $a->getDate()->getTimestamp() <=> $b->getDate()->getTimestamp();
             });
 
             foreach ($unvalidatedParties as $unvalidatedParty) {
