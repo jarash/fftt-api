@@ -58,10 +58,6 @@ final class RetrieveVirtualPointsOperation
             });
 
             foreach ($unvalidatedParties as $unvalidatedParty) {
-                if (!$unvalidatedParty->getAdversaireNom()) {
-                    continue;
-                }
-
                 if (!$latestMonth) {
                     $latestMonth = $unvalidatedParty->getDate()->format('m');
                 } else {
@@ -74,23 +70,26 @@ final class RetrieveVirtualPointsOperation
                 $coeff = $unvalidatedParty->getCoefficientChampionnat();
 
                 if (!$unvalidatedParty->isForfait()) {
+                    // Fallback sur le classement officiel stocké dans la partie
                     $adversairePoints = $unvalidatedParty->getAdversaireClassement();
 
-                    /*
-                     * TODO Refactoring in method
-                     */
-
-                    try {
-                        $availableJoueurs = $this->listJoueurOperation->listJoueursByNom($unvalidatedParty->getAdversaireNom(), $unvalidatedParty->getAdversairePrenom());
-                        foreach ($availableJoueurs as $availableJoueur) {
-                            if (round($unvalidatedParty->getAdversaireClassement() / 100) == $availableJoueur->getPoints()) {
-                                $classementJoueur = $this->retrieveClassementOperation->retrieveClassement($availableJoueur->getLicence());
-                                $adversairePoints = round($classementJoueur->getPoints(), 1);
-                                break;
+                    // Si le nom est disponible, on tente d'obtenir le classement actuel de l'adversaire
+                    if ($unvalidatedParty->getAdversaireNom()) {
+                        /*
+                         * TODO Refactoring in method
+                         */
+                        try {
+                            $availableJoueurs = $this->listJoueurOperation->listJoueursByNom($unvalidatedParty->getAdversaireNom(), $unvalidatedParty->getAdversairePrenom());
+                            foreach ($availableJoueurs as $availableJoueur) {
+                                if (round($unvalidatedParty->getAdversaireClassement() / 100) == $availableJoueur->getPoints()) {
+                                    $classementJoueur = $this->retrieveClassementOperation->retrieveClassement($availableJoueur->getLicence());
+                                    $adversairePoints = round($classementJoueur->getPoints(), 1);
+                                    break;
+                                }
                             }
+                        } catch (InvalidResponseException|InvalidRequestException $exception) {
+                            $adversairePoints = $unvalidatedParty->getAdversaireClassement();
                         }
-                    } catch (InvalidResponseException|InvalidRequestException $exception) {
-                        $adversairePoints = $unvalidatedParty->getAdversaireClassement();
                     }
 
                     $points = $unvalidatedParty->isVictoire()
