@@ -17,7 +17,7 @@
         }
     },
     "replace": {
-        "alamirault/fftt-api": "*"
+        "alamirault/fftt-api": "self.version"
     },
     "require": {
         "php": "^8.1",
