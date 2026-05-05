@@ -78,12 +78,16 @@ final class FFTTClient implements FFTTClientInterface
 
         $xml = simplexml_load_string($content, 'SimpleXMLElement', LIBXML_NOCDATA);
 
+        if ($xml === false) {
+            throw new \DomainException(sprintf('Request "%s" returned unparseable XML: %s', $uri, substr($content, 0, 200)));
+        }
+
         /** @var string $encoded */
         $encoded = json_encode($xml);
 
         /** @var array<mixed> $decoded */
         $decoded = json_decode($encoded, true);
 
-        return $decoded;
+        return is_array($decoded) ? $decoded : [];
     }
 }
